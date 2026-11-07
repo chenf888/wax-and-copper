@@ -92,6 +92,8 @@ node tools/acceptance.js
 
 ① 顶条按钮组贴右（特异性覆盖）；② **成就弹窗无限重复闪根因修复**：引擎 layerDataReset 硬编码清 achievements，载具声望循环下成就反复重达成——改为 Always-keep（成就=元进度），实测声望后成就保留、弹窗归零。
 
+③ **Next at 恒 2.12e278 修复**：五层 getNextAt 二分 72 轮配 1e300 上界收敛不足（2.12e278 恰为 1e300/2^72），改指数搜索+200 轮；实测 wax gain=10 → Next at=1210（精确）；移除 receiver→archive 连线；默认语言改英语。
+
 ## 六、模拟器适配备注（simulate.js ADAPT 点）
 
 global.layers 别名、doPopup 桩、里程碑默认 done 同步、声明货币池支付（buyable currencyLayer）、purchaseLimit 尊重、update()/onTick() 注入驱动、splice 落刀点击、**浅层优先压片顺序**（深层优先会把基础层每拍清零饿死）、**bank-before-press（基础层 ≥10×requires 才压，resetsNothing 转换层豁免）**。

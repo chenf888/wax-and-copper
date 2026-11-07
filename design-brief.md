@@ -92,4 +92,5 @@
 | tools/acceptance.js + simulate.js（批10d） | 引擎方向常量桩 | mod 层文件引用 RIGHT 常量 | acceptance 10P/0F |
 | js/game.js（批10d 反馈轮） | layerDataReset 将 achievements 加入 Always-keep | 引擎硬编码清成就数组，载具循环恢复极快 → 成就无限重达成、弹窗重复闪（用户反馈实抓） | 注入声望后 copper 成就保留 |
 | css/system-style.css（批10d 反馈轮） | `#waxTop > div.wt-actions` margin-left:auto 提特异性 | `#waxTop > div` 的 margin:0 压过 .wt-actions，按钮组未贴右 | 实测 actsRight=视口右缘，gap=0 |
+| js/layers ch1/ch2/ch4/ch7/ch8（批10d 反馈轮二） | 五层 getNextAt：固定 1e300 上界+72 轮二分 → 指数搜索上界+200 轮二分 | 72 轮对 1e300 上界只能缩 2^72 倍，Next at 恒 2.12e278=1e300/2^72（用户反馈实抓）；正确值如 wax 应为 1210 | 实测 gain=10→Next at=1210、gain=0→requires、性能 0.609ms/拍 |
 | js/game.js / js/technical/temp.js / displays.js / break_eternity.js | 未改 | 六不变量审计通过，无需触碰 | 冒烟 + 模拟器 + 浏览器 |

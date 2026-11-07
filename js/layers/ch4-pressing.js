@@ -50,8 +50,11 @@ CH4.pressNextAt = function () {
 	const cur = layers.press.getResetGain()
 	if (cur.lt(1)) return T4.pressRequires
 	let lo = new Decimal(T4.pressRequires)
-	let hi = new Decimal("1e300")
-	for (let i = 0; i < 72; i++) {
+	let hi = lo.mul(2)
+	// 指数搜索找上界（旧写法固定 1e300 只给 72 轮二分，收敛不到临界值 → Next at 恒 2.12e278）
+	let guard = 0
+	while ((CH4.pressCappedGain(CH4.pressRawGain(hi)).floor().lt(cur.add(1))) && guard < 4000) { lo = hi; hi = hi.mul(2); guard++ }
+	for (let i = 0; i < 200; i++) {
 		const mid = lo.add(hi).div(2)
 		if (CH4.pressCappedGain(CH4.pressRawGain(mid)).floor().lt(cur.add(1))) lo = mid
 		else hi = mid
