@@ -93,4 +93,7 @@
 | js/game.js（批10d 反馈轮） | layerDataReset 将 achievements 加入 Always-keep | 引擎硬编码清成就数组，载具循环恢复极快 → 成就无限重达成、弹窗重复闪（用户反馈实抓） | 注入声望后 copper 成就保留 |
 | css/system-style.css（批10d 反馈轮） | `#waxTop > div.wt-actions` margin-left:auto 提特异性 | `#waxTop > div` 的 margin:0 压过 .wt-actions，按钮组未贴右 | 实测 actsRight=视口右缘，gap=0 |
 | js/layers ch1/ch2/ch4/ch7/ch8（批10d 反馈轮二） | 五层 getNextAt：固定 1e300 上界+72 轮二分 → 指数搜索上界+200 轮二分 | 72 轮对 1e300 上界只能缩 2^72 倍，Next at 恒 2.12e278=1e300/2^72（用户反馈实抓）；正确值如 wax 应为 1210 | 实测 gain=10→Next at=1210、gain=0→requires、性能 0.609ms/拍 |
+| js/game.js（playtest 轮） | canReset normal 分支加 resetGain≥1 门（容错桩兼容 sim）；主循环 interval 包 try/finally | gain=0 白清资源；任一异常令 ticking 永久卡死→游戏静默停摆 | acceptance 10P + 真人试玩 8 章不停摆 |
+| js/utils.js（playtest 轮） | doPopup 上限 10 + adjustPopupTime 倒序遍历 | for-in+splice 跳元素→弹窗滞留 316 个压死主线程 | 弹窗 316→0 |
+| js/chapters.js（playtest 轮） | showTab 走进可见层即解锁；carrierReset 99=永不清 | type none 层无置位路径永久锁死；99 语义失效致 plating 六步被清 | 嘶声 Boss 可战；六步穿过声望风暴存活 |
 | js/game.js / js/technical/temp.js / displays.js / break_eternity.js | 未改 | 六不变量审计通过，无需触碰 | 冒烟 + 模拟器 + 浏览器 |

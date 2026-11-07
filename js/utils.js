@@ -260,7 +260,9 @@ function updateMilestones(layer) {
 	for (id in layers[layer].milestones) {
 		// 默认 done：requirement 与本层点数比较（ Wax & Copper：里程碑大多按 points 阈值声明）
 		const _m = layers[layer].milestones[id]
-		const _done = _m.done ? _m.done() : (_m.requirement !== undefined && player[layer].points.gte(_m.requirement))
+		// 基础层（row 0 type none）真实货币是全局 player.points；player[layer].points 是 startData 的孤立壳，直接比会永不达成
+		const _pool = (layers[layer].type === "none" && layers[layer].row === 0) ? player.points : player[layer].points
+		const _done = _m.done ? _m.done() : (_m.requirement !== undefined && _pool.gte(_m.requirement))
 		if (!(hasMilestone(layer, id)) && _done) {
 			player[layer].milestones.push(id)
 			if (layers[layer].milestones[id].onComplete) layers[layer].milestones[id].onComplete()
@@ -381,6 +383,8 @@ function doPopup(type = "none", text = "This is a test popup.", title = "", time
 	popupMessage = text;
 	popupTimer = timer;
 
+	// 弹窗上限：声望风暴下每拍可能触发成批里程碑/成就，无上限会把 transition-group 压死（玩家实测 2026-11-07）
+	while (activePopups.length >= 10) activePopups.shift()
 	activePopups.push({ "time": popupTimer, "type": popupType, "title": popupTitle, "message": (popupMessage + "\n"), "id": popupID, "color": color })
 	popupID++;
 }
@@ -388,10 +392,11 @@ function doPopup(type = "none", text = "This is a test popup.", title = "", time
 
 //Function to reduce time on active popups
 function adjustPopupTime(diff) {
-	for (popup in activePopups) {
-		activePopups[popup].time -= diff;
-		if (activePopups[popup]["time"] < 0) {
-			activePopups.splice(popup, 1); // Remove popup when time hits 0
+	// 倒序遍历：原版 for-in + splice 会跳元素，弹窗滞留成百（玩家实测 2026-11-07）
+	for (let i = activePopups.length - 1; i >= 0; i--) {
+		activePopups[i].time -= diff;
+		if (activePopups[i]["time"] < 0) {
+			activePopups.splice(i, 1); // Remove popup when time hits 0
 		}
 	}
 }

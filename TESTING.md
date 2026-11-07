@@ -94,6 +94,16 @@ node tools/acceptance.js
 
 ③ **Next at 恒 2.12e278 修复**：五层 getNextAt 二分 72 轮配 1e300 上界收敛不足（2.12e278 恰为 1e300/2^72），改指数搜索+200 轮；实测 wax gain=10 → Next at=1210（精确）；移除 receiver→archive 连线；默认语言改英语。
 
+### 真人全流程试玩（2026-11-07，用户指令）
+
+方式：真实 UI 点击路径 + devSpeed 时间压缩 + canReset 直调（等价按钮）。清档从零打到终局屏（winText/双语按钮/值班时长全验证）。
+
+**机制实测**：首购引导 3s、首次声望、嘶声 Boss 三波段 132 攻击至 78.00dB 终止（全局 ×50）、plating 六步逐格、母版磨损 1200 报废（worn 计数+1）、脆性三档产出差、线索账本 ledger 记账、短波窗口仪表、拼接落刀、终局屏。
+
+**试玩再修 6 缺陷**（见 changelog v1.0.3 / brief §6）：gain≥1 门、type none 走进解锁、弹窗双 bug、ticking try/finally、carrierReset 99 语义、里程碑基础层货币。
+
+**玩家体感记录**：蜡屑靠反复声望累积（非常识，靠提示行补足）；链式声望需逆序结算；Boss 战需实速（加速比破坏攻/衰平衡）；前期升级先堆 snd 再声望。
+
 ## 六、模拟器适配备注（simulate.js ADAPT 点）
 
 global.layers 别名、doPopup 桩、里程碑默认 done 同步、声明货币池支付（buyable currencyLayer）、purchaseLimit 尊重、update()/onTick() 注入驱动、splice 落刀点击、**浅层优先压片顺序**（深层优先会把基础层每拍清零饿死）、**bank-before-press（基础层 ≥10×requires 才压，resetsNothing 转换层豁免）**。

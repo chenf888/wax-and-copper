@@ -54,6 +54,10 @@ const WAX = {
 	carrierReset(id, protectFromRow) {
 		return function (prestiging) {
 			if (prestiging === id) return
+			// protectFromRow=99 约定为「永不清」：snd/plating/matrix/archive/listening/vault/silence 是元进度载体，
+			// 原判定 r>=99 对一切现实 row 都不成立 → 跨章声望照样清（plating 六步被 shellac 清零实抓 2026-11-07）
+			if (protectFromRow === 99) return
+			if (prestiging === id) return
 			const r = tmp[prestiging] ? tmp[prestiging].row : 0
 			if (typeof r !== "number") return
 			if (r >= protectFromRow) return
@@ -282,6 +286,14 @@ WAX.tick = function (diff) {
 ;(function () {
 	const rawShowTab = window.showTab
 	window.showTab = function (name, prev) {
+		// 走进可见层即解锁：type none 层（嘶声/电铸/总库…）没有 doReset 置位路径，
+		// 不在这里开门则 attack/update 等全部被 unlocked 挡死（玩家实测 2026-11-07）
+		try {
+			if (window.tmp && window.tmp[name] && window.tmp[name].layerShown && window.player[name] && !window.player[name].unlocked) {
+				window.player[name].unlocked = true
+				if (typeof WAX.buildDrawer === "function") WAX.buildDrawer()
+			}
+		} catch (e) {}
 		const changed = window.player ? player.tab !== name : true
 		rawShowTab(name, prev)
 		if (name === "restoration" && typeof WAX.storySign === "function") WAX.storySign()

@@ -119,7 +119,8 @@ function canReset(layer)
 	if (layers[layer].canReset!== undefined)
 		return run(layers[layer].canReset, layers[layer])
 	else if(tmp[layer].type == "normal")
-		return tmp[layer].baseAmount.gte(tmp[layer].requires)
+		// gain≥1 门：requires 刚满足时 floor 后可能为 0，允许声望会白清资源（玩家反馈 2026-11-07）
+		return tmp[layer].baseAmount.gte(tmp[layer].requires) && (tmp[layer].resetGain || decimalOne).gte(1)
 	else if(tmp[layer].type== "static")
 		return tmp[layer].baseAmount.gte(tmp[layer].nextAt) 
 	else 
@@ -405,6 +406,7 @@ var interval = setInterval(function() {
 	if (ticking) return;
 	if (tmp.gameEnded&&!player.keepGoing) return;
 	ticking = true
+	try {
 	let now = Date.now()
 	let diff = (now - player.time) / 1e3
 	let trueDiff = diff
@@ -431,7 +433,10 @@ var interval = setInterval(function() {
 	fixNaNs()
 	adjustPopupTime(trueDiff)
 	updateParticles(trueDiff)
-	ticking = false
+	} finally {
+		// 任一环节抛错也必须释放 ticking，否则游戏静默停摆且无报错（玩家实测 2026-11-07）
+		ticking = false
+	}
 }, 50)
 
 setInterval(function() {needCanvasUpdate = true}, 500)
