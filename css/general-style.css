@@ -1,0 +1,130 @@
+/* ==========================================================================
+   WAX & COPPER — design tokens & base typography
+   All colors in this game live in this :root block (plus the tone block in
+   tree-node.css). Hardcoding a hex anywhere else is a defect.
+   ========================================================================== */
+
+:root {
+	/* -- the six roles (§5.3) ------------------------------------------ */
+	--wax:      #d9c79a;  /* primary  冷蜡黄 — main structure, buyable state  */
+	--copper:   #4e8b7a;  /* accent   铜绿   — unlocks, shortwave window      */
+	--vermilion:#b5452f;  /* danger   朱红纸标 — scrapped, broken, hard cap     */
+	--olive:    #7f9a4e;  /* success  虫胶绿 — completion, restored            */
+	--text-1:   #efe6d2;
+	--text-2:   #a89e88;
+	--text-3:   #6b6355;
+	--bg-1:     #171410;  /* main background  */
+	--bg-2:     #221d17;  /* panel background */
+
+	/* -- material tones (layer colors; single source of truth, mirrored
+	      in js/tuning.js TONES so layers and CSS never drift) ------------ */
+	--tone-snd:         #d9c79a;
+	--tone-wax:         #c2a86b;
+	--tone-groove:      #b0924e;
+	--tone-cylinder:    #9a7a42;
+	--tone-hiss:        #b5452f;
+	--tone-stylus:      #8a967e;
+	--tone-copper:      #4e8b7a;
+	--tone-plating:     #5da08c;
+	--tone-matrix:      #3f6e5f;
+	--tone-shellac:     #a06b45;
+	--tone-press:       #7f9a4e;
+	--tone-sleeve:      #e5dcc0;
+	--tone-catalog:     #e0d5b0;
+	--tone-index:       #c9bc93;
+	--tone-archive:     #8a9a55;
+	--tone-broadcast:   #4e8b7a;
+	--tone-antenna:     #5da08c;
+	--tone-receiver:    #6fb5a0;
+	--tone-restoration: #7f9a4e;
+	--tone-denoise:     #6e8b3f;
+	--tone-splice:      #9aa84e;
+	--tone-discography: #c9bc93;
+	--tone-listening:   #efe6d2;
+	--tone-vault:       #d9c79a;
+	--tone-silence:     #b8ae96;
+
+	/* -- fonts (system only, no CDN) ------------------------------------ */
+	--font-serif: "Palatino Linotype", "Book Antiqua", "Source Han Serif SC",
+	              "Noto Serif CJK SC", "SimSun", serif;
+	--font-mono:  "Cascadia Mono", "Consolas", "Courier New", monospace;
+
+	/* -- functional mapping consumed by TMT ------------------------------ */
+	--background: var(--bg-1);
+	--color: var(--text-1);
+	--points: var(--wax);
+
+	/* grain texture, shared by body and panels */
+	--grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* Global things */
+body {
+	color: var(--text-1);
+	overflow: hidden;
+	background: var(--bg-1);
+}
+
+/* film grain: one quiet texture over the whole desk, carries the "wax dust"
+   material; purely static (no animation) */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	background-image: var(--grain);
+	opacity: 0.05;
+	pointer-events: none;
+	z-index: -1;
+}
+
+/* General text */
+h1, h2, h3, b, input {
+	display: inline;
+	font-family: var(--font-serif);
+	font-weight: 700;
+	letter-spacing: 0.02em;
+}
+
+h1, h2, h3 { color: var(--text-1); }
+
+b { color: var(--wax); font-weight: 700; }
+
+/* instrument readings: every number the player compares lives in this face */
+#points, .mono, .barBase .overlayText {
+	font-family: var(--font-mono);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.02em;
+}
+
+/* Component states — material semantics, not template reds and greens */
+.locked {
+	background-color: transparent;
+	cursor: not-allowed;
+}
+
+.can {
+	cursor: pointer;
+}
+
+/* feedback is one press of the stamp, not a hover explosion */
+.can:hover {
+	transform: scale(1.06, 1.06);
+}
+
+.bought {
+	background-color: rgba(127, 154, 78, 0.18);
+	cursor: default;
+}
+
+#points {
+	color: var(--points);
+	text-shadow: none;
+}
+
+/* Latin annotations under Chinese labels (top bar, drawer, stamps) */
+.wt-en, .wd-sub, .stamp-en {
+	font-family: var(--font-mono);
+	font-size: 0.62em;
+	letter-spacing: 0.14em;
+	color: var(--text-3);
+}

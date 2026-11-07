@@ -1,0 +1,117 @@
+/* ==========================================================================
+   WAX & COPPER — overlay chips, links, options
+   ========================================================================== */
+
+/* the option wheel is now a copper thumbwheel, drawn in CSS */
+#optionWheel {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
+	border-radius: 50%;
+	border: 1.5px solid var(--text-3);
+	background:
+		radial-gradient(circle at 50% 38%, rgba(78, 139, 122, 0.35), transparent 70%),
+		var(--bg-2);
+}
+
+#optionWheel::before {
+	content: "";
+	position: absolute;
+	top: 4px;
+	left: 50%;
+	margin-left: -1.5px;
+	width: 3px;
+	height: 10px;
+	border-radius: 1px;
+	background: var(--copper);
+}
+
+#optionWheel:hover {
+	transform: rotate(60deg);
+}
+
+/* the规程 tag */
+#info {
+	font-size: 12px;
+	color: var(--text-2);
+	position: absolute;
+	top: 8px;
+	left: 52px;
+	cursor: pointer;
+	width: 44px;
+	height: 28px;
+	line-height: 28px;
+	border: 1px solid var(--text-3);
+	border-radius: 2px;
+	background: rgba(34, 29, 23, 0.7);
+	-webkit-text-stroke-width: 0;
+}
+
+#info:hover {
+	color: var(--wax);
+	border-color: var(--copper);
+	transform: none;
+	text-shadow: none;
+}
+
+#version {
+	position: absolute;
+	right: 4px;
+	top: 4px;
+	text-align: right;
+	color: var(--text-3);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	cursor: pointer;
+}
+
+#version:hover {
+	transform: none;
+	color: var(--text-2);
+}
+
+a {
+	color: var(--copper);
+	text-decoration-line: none;
+	cursor: pointer;
+}
+
+.link {
+	display: block;
+	font-size: 15px;
+	color: var(--copper);
+	cursor: pointer;
+	font-family: var(--font-serif);
+	-webkit-text-stroke-width: 0;
+	text-decoration: none;
+}
+
+.link:hover {
+	color: var(--text-1);
+	transform: none;
+	text-shadow: none;
+}
+
+/* options rows: brass plates in a switchboard */
+.opt {
+	height: 100px;
+	width: 100px;
+	border-radius: 2px;
+	border: 1.5px solid var(--text-3);
+	background-color: var(--bg-2);
+	color: var(--text-2);
+	cursor: pointer;
+	font-family: var(--font-serif);
+}
+
+.opt:hover {
+	background-color: rgba(78, 139, 122, 0.18);
+	border-color: var(--copper);
+	color: var(--text-1);
+}
+
+/* option table — the settings switchboard */
+#optionsTable td { padding: 6px 10px; }

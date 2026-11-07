@@ -1,0 +1,65 @@
+/* ==========================================================================
+   WAX & COPPER — bars as rule scales.
+   Every bar is an instrument: a tick rule sits above the fill, the fill is
+   the layer color, the reading is mono. The hiss dB bar carries a vermilion
+   terminal line at the physical end of its scale (set per-bar via JS style).
+   ========================================================================== */
+
+.barBase {
+	overflow: hidden;
+	display: table;
+}
+
+.barBorder {
+	border: 1.5px solid var(--color);
+	border-radius: 2px;
+	overflow: hidden;
+	margin: 0;
+}
+
+.barBG {
+	position: relative;
+}
+
+/* the tick rule: one notch every 24px, fainter every fifth — instrument face */
+.barBG::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	pointer-events: none;
+	background:
+		repeating-linear-gradient(90deg,
+			transparent 0 23px,
+			rgba(168, 158, 136, 0.30) 23px 24px);
+}
+
+.overlayTextContainer {
+	z-index: 3;
+	border-radius: 2px;
+	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	align-items: left;
+	position: absolute;
+}
+
+.fill {
+	background-color: var(--color);
+	z-index: 2;
+	position: absolute;
+	overflow: hidden;
+	margin-left: -0.5px;
+	transition-duration: 0.2s;
+}
+
+.overlayText {
+	z-index: 6;
+	position: relative;
+}
+
+/* hard-ceiling marker: the bar's own borderStyle may thicken its right edge
+   (see hiss dB bar) — this class makes the terminal read as a stamped limit */
+.hardEnd {
+	box-shadow: inset -3px 0 0 var(--vermilion);
+}

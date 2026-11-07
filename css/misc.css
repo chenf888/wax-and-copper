@@ -1,0 +1,105 @@
+/* ==========================================================================
+   WAX & COPPER — misc: prestige stamp, tab buttons, tooltip, rules
+   ========================================================================== */
+
+/* the prestige action is a stamping press: rect, not a pill */
+.reset {
+	height: 120px;
+	width: 180px;
+	border-radius: 3px;
+	border: 1.5px solid var(--text-3);
+	background-color: rgba(34, 29, 23, 0.5);
+	color: var(--text-2);
+	font-family: var(--font-serif);
+	font-size: 13px;
+	line-height: 1.5;
+	padding: 8px 10px;
+}
+
+.reset.can {
+	border-color: var(--wax);
+	background-color: var(--bg-2);
+	background-image: linear-gradient(180deg, rgba(217, 199, 154, 0.14), rgba(217, 199, 154, 0.04));
+	color: var(--text-1);
+	/* the press face: light catches the top edge, shadow pools at the bottom */
+	box-shadow: inset 0 1.5px 0 rgba(239, 230, 210, 0.22), inset 0 -3px 0 rgba(23, 20, 16, 0.5);
+}
+
+.reset.can:hover {
+	outline: 2px solid var(--copper);
+	outline-offset: 2px;
+}
+
+.reset.locked {
+	border-style: dashed;
+	color: var(--text-3);
+}
+
+/* layer subtab buttons: paper folder tabs */
+.tabButton {
+	background-color: transparent;
+	color: var(--text-2);
+	font-size: 16px;
+	cursor: pointer;
+	padding: 6px 20px;
+	margin: 5px;
+	border-radius: 3px 3px 0 0;
+	border: 1.5px solid var(--text-3);
+	border-bottom: none;
+}
+
+.tabButton:hover {
+	transform: none;
+	color: var(--text-1);
+	border-color: var(--copper);
+	text-shadow: none;
+}
+
+/* tooltips: dark slips */
+.tooltip {
+	pointer-events: none;
+	text-align: center;
+	width: 170px;
+	font-size: 13px;
+	line-height: 1.45;
+	bottom: 100%;
+	left: 50%;
+	margin-bottom: 5px;
+	transform: translateX(-50%);
+	padding: 8px;
+	font-family: var(--font-serif);
+	border-radius: 2px;
+	opacity: 0;
+	transition: opacity 0.2s;
+	position: absolute;
+	z-index: 20000;
+	background-color: var(--bg-1);
+	border: 1px solid var(--text-3);
+	color: var(--text-1);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.tooltip::after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: var(--text-3) transparent transparent transparent;
+}
+
+/* Horizontal/vertical rules */
+.vl {
+	border-left: 1px solid var(--text-3);
+	height: 100%;
+	position: absolute;
+	left: 50%;
+	margin-left: -3px;
+	top: 44px;
+}
+
+.hl {
+	border-top: 1px solid var(--text-3);
+}

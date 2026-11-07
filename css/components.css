@@ -1,0 +1,351 @@
+/* ==========================================================================
+   WAX & COPPER — component skins.
+   Upgrades are paper tags with a punch notch, buyables are bakelite knobs,
+   milestones are ledger rows, challenges are record sleeves, achievements
+   are wax seals. Three states everywhere: affordable / out of reach / owned.
+   ========================================================================== */
+
+/* ---- upgrades: paper tags ------------------------------------------- */
+.upg {
+	min-height: 120px;
+	width: 120px;
+	border-radius: 2px;
+	border: 1.5px solid var(--text-3);
+	/* left-edge punch notch, like a tag pulled from a filing slot */
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 30%, 7% 38%, 0 46%);
+	font-size: 11px;
+	line-height: 1.45;
+	overflow: visible;
+	position: relative;
+	color: var(--text-2);
+	background-color: transparent;
+	padding: 10px 8px 8px 14px;
+}
+
+.upg.can {
+	background-color: var(--bg-2);
+	background-image: linear-gradient(180deg, rgba(217, 199, 154, 0.12), rgba(217, 199, 154, 0.03));
+	border-color: var(--wax);
+	color: var(--text-1);
+}
+
+.upg.locked {
+	border-style: dashed;
+	color: var(--text-3);
+	background-color: rgba(34, 29, 23, 0.5);
+}
+
+.upg.bought {
+	border-color: var(--olive);
+	background-color: rgba(127, 154, 78, 0.14);
+	color: var(--text-1);
+}
+
+/* the pressed seal dot once owned */
+.upg.bought::after {
+	content: "";
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--olive);
+	opacity: 0.9;
+}
+
+.upg.can:hover {
+	outline: 1.5px solid var(--copper);
+	outline-offset: 1px;
+	z-index: 7;
+}
+
+/* ---- achievements: wax seals ----------------------------------------- */
+.achievement {
+	height: 90px;
+	width: 90px;
+	border-radius: 50%;
+	border: 1.5px solid var(--text-3);
+	font-size: 10px;
+	color: var(--text-1);
+	text-shadow: none;
+	background-color: var(--bg-2);
+	position: relative;
+}
+
+.achievement::before {
+	/* inner seal ring */
+	content: "";
+	position: absolute;
+	inset: 6px;
+	border-radius: 50%;
+	border: 1px solid rgba(107, 99, 85, 0.5);
+	pointer-events: none;
+}
+
+.achievement:hover {
+	box-shadow: none;
+	outline: 1.5px solid var(--copper);
+	outline-offset: 2px;
+	z-index: 7;
+}
+
+/* ---- buyables: bakelite knobs ---------------------------------------- */
+.buyable {
+	height: 200px;
+	width: 200px;
+	border-radius: 50%;
+	border: 1.5px solid var(--text-3);
+	font-size: 11px;
+	line-height: 1.5;
+	position: relative;
+	color: var(--text-2);
+	background-color: transparent;
+	padding: 26px 22px;
+}
+
+/* the scale ring cut into the knob face */
+.buyable::before {
+	content: "";
+	position: absolute;
+	inset: 8px;
+	border-radius: 50%;
+	border: 1px dashed rgba(107, 99, 85, 0.55);
+	pointer-events: none;
+}
+
+/* the index notch at twelve o'clock */
+.buyable::after {
+	content: "";
+	position: absolute;
+	top: 12px;
+	left: 50%;
+	margin-left: -1.5px;
+	width: 3px;
+	height: 12px;
+	border-radius: 1px;
+	background: var(--text-3);
+	pointer-events: none;
+}
+
+.buyable.can {
+	background-color: var(--bg-2);
+	background-image: radial-gradient(circle at 50% 34%, rgba(217, 199, 154, 0.16), transparent 62%);
+	border-color: var(--wax);
+	color: var(--text-1);
+}
+
+.buyable.locked {
+	border-style: dashed;
+	color: var(--text-3);
+}
+
+.buyable.bought {
+	border-color: var(--olive);
+}
+
+.buyable.bought::after {
+	background: var(--olive);
+}
+
+.buyable.can:hover {
+	outline: 1.5px solid var(--copper);
+	outline-offset: 3px;
+	z-index: 7;
+}
+
+/* ---- milestones: ledger rows ------------------------------------------ */
+.milestone, .milestoneDone {
+	width: 100%;
+	min-width: 120px;
+	min-height: 60px;
+	padding: 8px 14px 8px 16px;
+	border: none;
+	border-left: 3px solid var(--text-3);
+	border-radius: 0 2px 2px 0;
+	background-color: rgba(34, 29, 23, 0.6);
+	color: var(--text-3);
+	text-align: left;
+	line-height: 1.5;
+}
+
+.milestoneDone {
+	border-left-color: var(--olive);
+	background-color: rgba(127, 154, 78, 0.10);
+	color: var(--text-1);
+}
+
+/* ---- challenges: record sleeves ---------------------------------------- */
+.challenge {
+	background-color: var(--bg-2);
+	position: relative;
+	border: 1.5px solid var(--text-3);
+	border-radius: 4px;
+	color: var(--text-2);
+	width: 300px;
+	height: 300px;
+	font-size: 13px;
+	line-height: 1.5;
+	padding: 18px 16px;
+}
+
+/* corner index, like a catalogue number on a sleeve */
+.challenge::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 34px;
+	height: 34px;
+	border-top: 1.5px solid var(--text-3);
+	border-left: 1.5px solid var(--text-3);
+	border-radius: 4px 0 0 0;
+	pointer-events: none;
+}
+
+.challenge.done {
+	background-color: rgba(127, 154, 78, 0.12);
+	border-color: var(--olive);
+	color: var(--text-1);
+}
+
+/* the completion stamp */
+.challenge.done::after {
+	content: "";
+	position: absolute;
+	right: 14px;
+	top: 14px;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	border: 2px solid var(--olive);
+	box-shadow: inset 0 0 0 3px rgba(127, 154, 78, 0.35);
+}
+
+.challenge.canComplete {
+	background-color: rgba(217, 199, 154, 0.14);
+	border-color: var(--wax);
+	color: var(--text-1);
+}
+
+/* ---- infoboxes: archive cards ------------------------------------------ */
+.story {
+	width: 600px;
+	max-width: 95%;
+	border: 1px solid var(--text-3);
+	border-left: 3px solid var(--copper);
+	border-radius: 0 2px 2px 0;
+	margin-bottom: 8px;
+	text-align: left;
+	background-color: rgba(34, 29, 23, 0.85);
+}
+
+.story-title {
+	text-align: left;
+	font-size: 19px;
+	color: var(--text-1);
+	cursor: pointer;
+	border: none;
+	padding: 6px 10px;
+	border-radius: 0;
+	background: transparent;
+}
+
+.story-toggle {
+	border: none;
+	background: transparent;
+	color: var(--copper);
+	font-size: 18px;
+	pointer-events: none;
+	width: 1em;
+	display: inline-block;
+}
+
+.story-text {
+	padding: 4px 12px 10px;
+	border: none;
+	border-top: 1px solid rgba(107, 99, 85, 0.4);
+	border-radius: 0;
+	margin-bottom: 0;
+	color: var(--text-2);
+	line-height: 1.65;
+}
+
+/* ---- tiles & big upgrades ---------------------------------------------- */
+.tile {
+	height: 80px;
+	width: 80px;
+	border-radius: 2px;
+	border: 1.5px solid var(--text-3);
+	font-size: 10px;
+	overflow: visible;
+	background-color: rgba(34, 29, 23, 0.5);
+}
+
+.tile.can {
+	border-color: var(--wax);
+	color: var(--text-1);
+}
+
+.tile.can:hover {
+	outline: 1.5px solid var(--copper);
+	outline-offset: 1px;
+	z-index: 7;
+}
+
+.upgBig {
+	height: 200px;
+	width: 200px;
+	border-radius: 2px;
+	border: 1.5px solid var(--text-3);
+	background-color: rgba(34, 29, 23, 0.5);
+}
+
+/* ---- long buttons (respec etc.): brass plates --------------------------- */
+.longUpg {
+	height: 50px;
+	width: 140px;
+	background: rgba(34, 29, 23, 0.6);
+	border-radius: 2px;
+	border: 1.5px solid var(--copper);
+	font-size: 12px;
+	color: var(--text-1);
+}
+
+.longUpg.can:hover {
+	background-color: rgba(78, 139, 122, 0.2);
+}
+
+/* ---- small buttons ------------------------------------------------------- */
+.smallUpg {
+	height: 40px;
+	width: 40px;
+	border-radius: 2px;
+	border: 1.5px solid var(--text-3);
+}
+
+/* ---- clickables share the tag language ----------------------------------- */
+.clickable {
+	border-radius: 2px;
+	border: 1.5px solid var(--text-3);
+	background-color: rgba(34, 29, 23, 0.6);
+	color: var(--text-2);
+}
+
+.clickable.can {
+	border-color: var(--wax);
+	color: var(--text-1);
+	background-color: var(--bg-2);
+}
+
+.clickable.can:hover {
+	outline: 1.5px solid var(--copper);
+	outline-offset: 1px;
+}
+
+/* 可买/已购按钮被 TMT 内联注入层色亮底，米白字对比不足 → 深字（视觉验收 2026-11-07） */
+.upg.can, .upg.bought,
+.buyable.can, .buyable.bought,
+.challenge.canComplete, .challenge.done {
+	color: var(--bg-1);
+}
